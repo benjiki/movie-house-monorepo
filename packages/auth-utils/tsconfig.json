@@ -1,6 +1,0 @@
-{
-  "extends": "@repo/typescript-config/base.json",
-  "compilerOptions": {
-    "typeRoots": ["./node_modules/@types", "../../packages/types/src"]
-  }
-}
