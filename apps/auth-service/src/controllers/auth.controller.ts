@@ -59,3 +59,15 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
     res.status(403).json({ error: error.message });
   }
 };
+
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    const user = req.user as { id: number };
+
+    await auth.logoutUserService(user.id);
+
+    res.json({ message: "Logged out successfully" });
+  } catch (error: any) {
+    res.status(500).json({ error: "Logout failed" });
+  }
+};

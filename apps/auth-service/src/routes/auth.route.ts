@@ -6,14 +6,26 @@ import { authorizeRoles } from "../middleware/authorizeRoles";
 import { validateRequest } from "../middleware/validateRequest";
 
 import * as authController from "../controllers/auth.controller";
-import { registerValidationSchema } from "../validations/auth.validations";
+import * as validation from "../validations/auth.validations";
 
 const router: Router = express.Router();
 
 router.post(
   "/register",
-  validateRequest(registerValidationSchema),
+  validateRequest(validation.registerValidationSchema),
   authController.registerUser
+);
+
+router.post(
+  "/login",
+  validateRequest(validation.loginValidationSchema),
+  authController.loginUser
+);
+
+router.post(
+  "/logout",
+  passport.authenticate("jwt", { session: false }),
+  authController.logoutUser
 );
 
 router.get(

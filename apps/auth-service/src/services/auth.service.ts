@@ -10,6 +10,12 @@ export const regUserService = async (data: {
   password: string;
   role?: string;
 }) => {
+  const userExists = await prisma.user.findUnique({
+    where: { phoneNumber: data.phoneNumber },
+  });
+  if (userExists) {
+    throw new Error("Phone number is already registered");
+  }
   const hashedPassword = await bcrypt.hash(data.password, 10);
   const role = (data.role || "Customer") as UserRoles;
   return prisma.user.create({
@@ -77,4 +83,13 @@ export const refreshAccessTokenService = async (refreshToken: string) => {
   } catch (err) {
     throw new Error("Refresh token expired or invalid");
   }
+};
+
+// logout service
+
+export const logoutUserService = async (userId: number) => {
+  await prisma.user.update({
+    where: { id: userId },
+    data: { refreshToken: null },
+  });
 };
