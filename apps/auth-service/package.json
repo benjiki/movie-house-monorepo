@@ -2,7 +2,7 @@
   "name": "@repo/auth-service",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "dev": "pnpm dlx tsx --env-file=.env --watch src/server.ts",

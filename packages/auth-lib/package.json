@@ -1,0 +1,21 @@
+{
+  "name": "@repo/auth-lib",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "type": "module",
+  "types": "src/index.ts",
+  "private": true,
+  "dependencies": {
+    "jsonwebtoken": "^9.0.0",
+    "joi": "^17.9.2",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
