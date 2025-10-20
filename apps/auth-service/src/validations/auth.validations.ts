@@ -1,3 +1,4 @@
+// apps/auth-service/src/validations/auth.validations.ts
 import Joi from "joi";
 
 export const registerValidationSchema = Joi.object({
