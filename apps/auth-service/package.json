@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "docker compose up -d && pnpm exec wait-port 5433 && pnpm dlx tsx --env-file=.env --watch src/server.ts",
+    "dev": "docker-compose up -d && pnpm exec wait-port 5433 && pnpm dlx tsx --env-file=.env --watch src/server.ts",
     "check-types": "tsc --noEmit"
   },
   "keywords": [],
