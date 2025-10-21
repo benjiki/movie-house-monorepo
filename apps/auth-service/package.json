@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "pnpm dlx tsx --env-file=.env --watch src/server.ts",
+    "dev": "docker compose up -d && pnpm exec wait-port 5433 && pnpm dlx tsx --env-file=.env --watch src/server.ts",
     "check-types": "tsc --noEmit"
   },
   "keywords": [],
@@ -29,6 +29,7 @@
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/passport": "^1.0.17",
-    "@types/passport-jwt": "^4.0.1"
+    "@types/passport-jwt": "^4.0.1",
+    "wait-port": "^1.1.0"
   }
 }
