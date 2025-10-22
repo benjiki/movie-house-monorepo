@@ -6,7 +6,7 @@ import orderRouter from "./routes/order.route";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 8002;
 
 // ✅ Routes
 app.use("/api/orders", orderRouter);

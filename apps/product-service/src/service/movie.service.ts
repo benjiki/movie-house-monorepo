@@ -1,0 +1,54 @@
+import { prisma } from "@repo/product-db";
+import { ApiError } from "../utils/ApiError";
+export const createMovieService = async (data: {
+  movieName: string;
+  movieImage: string;
+  adminId: number;
+  movieCategoryId: number;
+}) => {
+  const movieExists = await prisma.movies.findFirst({
+    where: { movieName: data.movieName },
+  });
+  if (movieExists) {
+    throw new Error("Movie name is already used");
+  }
+  return prisma.movies.create({
+    data: {
+      movieName: data.movieName,
+      movieImage: data.movieImage,
+      adminId: data.adminId,
+      movieCategoryId: data.movieCategoryId,
+    },
+  });
+};
+
+export const movieCategoryCreate = async (data: {
+  movieCategoryName: string;
+  price: number;
+  adminId: number;
+}) => {
+  const movieCategoryExists = await prisma.movieCategory.findFirst({
+    where: { movieCategoryName: data.movieCategoryName },
+  });
+  if (movieCategoryExists) {
+    throw new ApiError(400, "Movie Category already exists");
+  }
+
+  return prisma.movieCategory.create({ data });
+};
+
+export const movieCategoryUpdate = async (data: {
+  id: number;
+  movieCategoryName: string;
+  price: number;
+  adminId: number;
+}) => {
+  const findMovieCategory = await prisma.movieCategory.findUnique({
+    where: { id: data.id },
+  });
+  if (!findMovieCategory) {
+    throw new Error("movie category not found");
+  }
+
+  return prisma.movieCategory.update({ where: { id: data.id }, data });
+};

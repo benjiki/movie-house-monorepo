@@ -137,9 +137,12 @@ importers:
 
   apps/product-service:
     dependencies:
-      '@repo/auth-db':
+      '@repo/auth-lib':
         specifier: workspace:*
-        version: link:../../packages/auth-db
+        version: link:../../packages/auth-lib
+      '@repo/product-db':
+        specifier: workspace:*
+        version: link:../../packages/product-db
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0

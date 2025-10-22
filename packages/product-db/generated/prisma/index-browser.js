@@ -120,9 +120,92 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.MoviesScalarFieldEnum = {
+  id: 'id',
+  movieName: 'movieName',
+  movieImage: 'movieImage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId',
+  movieCategoryId: 'movieCategoryId'
+};
+
+exports.Prisma.MovieCategoryScalarFieldEnum = {
+  id: 'id',
+  movieCategoryName: 'movieCategoryName',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId'
+};
+
+exports.Prisma.SeriesScalarFieldEnum = {
+  id: 'id',
+  seriesName: 'seriesName',
+  seriesDis: 'seriesDis',
+  seriesImage: 'seriesImage',
+  seriesSeason: 'seriesSeason',
+  seriesEpisode: 'seriesEpisode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId',
+  seriesCategoryId: 'seriesCategoryId'
+};
+
+exports.Prisma.SeriesCategoryScalarFieldEnum = {
+  id: 'id',
+  seriesCategoryName: 'seriesCategoryName',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId'
+};
+
+exports.Prisma.OtherProductsScalarFieldEnum = {
+  id: 'id',
+  productName: 'productName',
+  productImage: 'productImage',
+  otherProductType: 'otherProductType',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId',
+  otherProductCategoryId: 'otherProductCategoryId'
+};
+
+exports.Prisma.OtherProductCategoryScalarFieldEnum = {
+  id: 'id',
+  otherProductCategoryName: 'otherProductCategoryName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+exports.OtherProductType = exports.$Enums.OtherProductType = {
+  BRAND_NEW: 'BRAND_NEW',
+  REFURBISHED: 'REFURBISHED',
+  SLIGHTLY_USED: 'SLIGHTLY_USED',
+  USED: 'USED',
+  HEAVILY_USED: 'HEAVILY_USED',
+  FOR_PARTS: 'FOR_PARTS'
+};
 
 exports.Prisma.ModelName = {
-
+  movies: 'movies',
+  movieCategory: 'movieCategory',
+  series: 'series',
+  seriesCategory: 'seriesCategory',
+  otherProducts: 'otherProducts',
+  otherProductCategory: 'otherProductCategory'
 };
 
 /**

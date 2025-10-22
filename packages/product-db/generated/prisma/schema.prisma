@@ -1,15 +1,90 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model movies {
+  id         Int      @id @default(autoincrement())
+  movieName  String
+  movieImage String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  adminId    Int
+
+  movieCategoryId Int
+  movieCategory   movieCategory @relation(fields: [movieCategoryId], references: [id])
+}
+
+model movieCategory {
+  id                Int      @id @default(autoincrement())
+  movieCategoryName String
+  price             Float
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  adminId           Int
+
+  movies movies[] // One category to many movies
+}
+
+model series {
+  id            Int      @id @default(autoincrement())
+  seriesName    String
+  seriesDis     String
+  seriesImage   String
+  seriesSeason  Int
+  seriesEpisode Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  adminId       Int
+
+  seriesCategoryId Int
+  seriesCategory   seriesCategory @relation(fields: [seriesCategoryId], references: [id])
+}
+
+model seriesCategory {
+  id                 Int      @id @default(autoincrement())
+  seriesCategoryName String
+  price              Float
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  adminId            Int
+
+  series series[] // One category to many series
+}
+
+model otherProducts {
+  id               Int              @id @default(autoincrement())
+  productName      String
+  productImage     String
+  otherProductType OtherProductType @default(BRAND_NEW)
+  price            Float
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  adminId          Int
+
+  otherProductCategoryId Int
+  otherProductCategory   otherProductCategory @relation(fields: [otherProductCategoryId], references: [id])
+}
+
+model otherProductCategory {
+  id                       Int             @id @default(autoincrement())
+  otherProductCategoryName String
+  createdAt                DateTime        @default(now())
+  updatedAt                DateTime        @updatedAt
+  adminId                  Int
+  otherProducts            otherProducts[]
+}
+
+enum OtherProductType {
+  BRAND_NEW
+  REFURBISHED
+  SLIGHTLY_USED
+  USED
+  HEAVILY_USED
+  FOR_PARTS
 }

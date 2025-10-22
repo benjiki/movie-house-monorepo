@@ -92,9 +92,92 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.MoviesScalarFieldEnum = {
+  id: 'id',
+  movieName: 'movieName',
+  movieImage: 'movieImage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId',
+  movieCategoryId: 'movieCategoryId'
+};
+
+exports.Prisma.MovieCategoryScalarFieldEnum = {
+  id: 'id',
+  movieCategoryName: 'movieCategoryName',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId'
+};
+
+exports.Prisma.SeriesScalarFieldEnum = {
+  id: 'id',
+  seriesName: 'seriesName',
+  seriesDis: 'seriesDis',
+  seriesImage: 'seriesImage',
+  seriesSeason: 'seriesSeason',
+  seriesEpisode: 'seriesEpisode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId',
+  seriesCategoryId: 'seriesCategoryId'
+};
+
+exports.Prisma.SeriesCategoryScalarFieldEnum = {
+  id: 'id',
+  seriesCategoryName: 'seriesCategoryName',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId'
+};
+
+exports.Prisma.OtherProductsScalarFieldEnum = {
+  id: 'id',
+  productName: 'productName',
+  productImage: 'productImage',
+  otherProductType: 'otherProductType',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId',
+  otherProductCategoryId: 'otherProductCategoryId'
+};
+
+exports.Prisma.OtherProductCategoryScalarFieldEnum = {
+  id: 'id',
+  otherProductCategoryName: 'otherProductCategoryName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  adminId: 'adminId'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+exports.OtherProductType = exports.$Enums.OtherProductType = {
+  BRAND_NEW: 'BRAND_NEW',
+  REFURBISHED: 'REFURBISHED',
+  SLIGHTLY_USED: 'SLIGHTLY_USED',
+  USED: 'USED',
+  HEAVILY_USED: 'HEAVILY_USED',
+  FOR_PARTS: 'FOR_PARTS'
+};
 
 exports.Prisma.ModelName = {
-
+  movies: 'movies',
+  movieCategory: 'movieCategory',
+  series: 'series',
+  seriesCategory: 'seriesCategory',
+  otherProducts: 'otherProducts',
+  otherProductCategory: 'otherProductCategory'
 };
 /**
  * Create the Client
@@ -107,7 +190,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Project Management\\multiprojects\\moviehouse\\packages\\product-db\\src\\generated\\prisma",
+      "value": "C:\\Project Management\\multiprojects\\moviehouse\\packages\\product-db\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -125,10 +208,10 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../.env"
   },
-  "relativePath": "../../../prisma",
+  "relativePath": "../../prisma",
   "clientVersion": "6.17.1",
   "engineVersion": "272a37d34178c2894197e17273bf937f25acdeac",
   "datasourceNames": [
@@ -144,13 +227,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n",
-  "inlineSchemaHash": "f4defb510352aeb258e32fd0e4e744b44176032e921a554a415dd34c135bd53c",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel movies {\n  id         Int      @id @default(autoincrement())\n  movieName  String\n  movieImage String\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n  adminId    Int\n\n  movieCategoryId Int\n  movieCategory   movieCategory @relation(fields: [movieCategoryId], references: [id])\n}\n\nmodel movieCategory {\n  id                Int      @id @default(autoincrement())\n  movieCategoryName String\n  price             Float\n  createdAt         DateTime @default(now())\n  updatedAt         DateTime @updatedAt\n  adminId           Int\n\n  movies movies[] // One category to many movies\n}\n\nmodel series {\n  id            Int      @id @default(autoincrement())\n  seriesName    String\n  seriesDis     String\n  seriesImage   String\n  seriesSeason  Int\n  seriesEpisode Int\n  createdAt     DateTime @default(now())\n  updatedAt     DateTime @updatedAt\n  adminId       Int\n\n  seriesCategoryId Int\n  seriesCategory   seriesCategory @relation(fields: [seriesCategoryId], references: [id])\n}\n\nmodel seriesCategory {\n  id                 Int      @id @default(autoincrement())\n  seriesCategoryName String\n  price              Float\n  createdAt          DateTime @default(now())\n  updatedAt          DateTime @updatedAt\n  adminId            Int\n\n  series series[] // One category to many series\n}\n\nmodel otherProducts {\n  id               Int              @id @default(autoincrement())\n  productName      String\n  productImage     String\n  otherProductType OtherProductType @default(BRAND_NEW)\n  price            Float\n  createdAt        DateTime         @default(now())\n  updatedAt        DateTime         @updatedAt\n  adminId          Int\n\n  otherProductCategoryId Int\n  otherProductCategory   otherProductCategory @relation(fields: [otherProductCategoryId], references: [id])\n}\n\nmodel otherProductCategory {\n  id                       Int             @id @default(autoincrement())\n  otherProductCategoryName String\n  createdAt                DateTime        @default(now())\n  updatedAt                DateTime        @updatedAt\n  adminId                  Int\n  otherProducts            otherProducts[]\n}\n\nenum OtherProductType {\n  BRAND_NEW\n  REFURBISHED\n  SLIGHTLY_USED\n  USED\n  HEAVILY_USED\n  FOR_PARTS\n}\n",
+  "inlineSchemaHash": "41fd98e46c99d9adb73c1797951c106224b765f5abc91cef71dc1d3f52652b45",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"movies\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"movieName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"movieImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"movieCategoryId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"movieCategory\",\"kind\":\"object\",\"type\":\"movieCategory\",\"relationName\":\"movieCategoryTomovies\"}],\"dbName\":null},\"movieCategory\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"movieCategoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"movies\",\"kind\":\"object\",\"type\":\"movies\",\"relationName\":\"movieCategoryTomovies\"}],\"dbName\":null},\"series\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"seriesName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"seriesDis\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"seriesImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"seriesSeason\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"seriesEpisode\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"seriesCategoryId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"seriesCategory\",\"kind\":\"object\",\"type\":\"seriesCategory\",\"relationName\":\"seriesToseriesCategory\"}],\"dbName\":null},\"seriesCategory\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"seriesCategoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"series\",\"kind\":\"object\",\"type\":\"series\",\"relationName\":\"seriesToseriesCategory\"}],\"dbName\":null},\"otherProducts\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"productName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"productImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"otherProductType\",\"kind\":\"enum\",\"type\":\"OtherProductType\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"otherProductCategoryId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"otherProductCategory\",\"kind\":\"object\",\"type\":\"otherProductCategory\",\"relationName\":\"otherProductCategoryTootherProducts\"}],\"dbName\":null},\"otherProductCategory\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"otherProductCategoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"otherProducts\",\"kind\":\"object\",\"type\":\"otherProducts\",\"relationName\":\"otherProductCategoryTootherProducts\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

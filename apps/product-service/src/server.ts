@@ -3,6 +3,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import movieRouter from "./router/movie.route";
+import { ApiError } from "./utils/ApiError";
+
 // Load env variables
 dotenv.config();
 
@@ -14,7 +17,7 @@ app.use(cors());
 app.use(express.json()); // Parse JSON bodies
 
 // ✅ Routes
-// app.use("/api/auth", authRoutes);
+app.use("/api/movies", movieRouter);
 
 // ✅ Health check
 app.get("/", (req, res) => {
@@ -29,8 +32,18 @@ app.use(
     res: express.Response,
     next: express.NextFunction
   ) => {
-    console.error("Unhandled error:", err);
-    res.status(500).json({ error: "Internal server error" });
+    const isProduction = process.env.NODE_ENV === "production";
+
+    if (!isProduction) {
+      // Show full error in development
+      console.error("Unhandled error:", err);
+    }
+
+    const statusCode = err instanceof ApiError ? err.statusCode : 500;
+    const message =
+      err instanceof ApiError ? err.message : "Internal server error";
+
+    res.status(statusCode).json({ error: message });
   }
 );
 
