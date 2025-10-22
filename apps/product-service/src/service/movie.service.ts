@@ -75,3 +75,24 @@ export const movieCategoryDelete = async (data: { id: number }) => {
 
   return prisma.movieCategory.delete({ where: { id: data.id } });
 };
+
+export const getMovieCategoryByID = async (data: { id: number }) => {
+  const movieCategory = await prisma.movieCategory.findUnique({
+    where: { id: data.id },
+  });
+
+  if (!movieCategory) {
+    throw new ApiError(404, "Movie category not found");
+  }
+
+  return movieCategory;
+};
+
+export const getAllMovieCategory = async () => {
+  const getMovieCategories = await prisma.movieCategory.findMany();
+
+  if (!getMovieCategories) {
+    throw new ApiError(404, "no movies found in the database ");
+  }
+  return getMovieCategories;
+};

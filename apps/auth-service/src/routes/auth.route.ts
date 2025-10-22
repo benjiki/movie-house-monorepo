@@ -27,7 +27,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   authController.logoutUser
 );
-
+router.post("/refresh-token", authController.refreshAccessToken);
 router.get(
   "/admin-only",
   passport.authenticate("jwt", { session: false }),

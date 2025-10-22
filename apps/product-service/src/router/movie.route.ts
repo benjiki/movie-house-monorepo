@@ -1,5 +1,4 @@
 import express, { Router } from "express";
-import { Request, Response } from "express";
 import { authenticateJWT, authorizeRoles } from "@repo/auth-lib";
 import * as movieController from "../controller/movie.controller";
 const router: Router = express.Router();
@@ -14,10 +13,11 @@ router.post(
   movieController.CreateMovieCategory
 );
 router.put(
-  "/movie-category",
+  "/movie-category/:id",
   authenticateJWT,
   authorizeRoles("Admin"),
-  validateRequest(validation.movieCategoryUpdateVaidationSchema),
+  validateParams(validation.movieCategoryIdParamSchema),
+  validateRequest(validation.movieCategoryUpdateBodySchema),
   movieController.UpdateMovieCategory
 );
 
@@ -28,5 +28,15 @@ router.delete(
   validateParams(validation.movieCategoryIdParamSchema),
   movieController.DeleteMovieCategory
 );
+
+router.get(
+  "/movie-category/:id",
+  authenticateJWT,
+  authorizeRoles("Admin", "Customer"),
+  validateParams(validation.movieCategoryIdParamSchema),
+  movieController.GetMovieCategoryById
+);
+
+router.get("/movie-category", movieController.GetAllMoviecategory);
 
 export default router;

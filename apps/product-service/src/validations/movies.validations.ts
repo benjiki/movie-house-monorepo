@@ -11,11 +11,7 @@ export const movieCategoryCreateVaidationSchema = Joi.object({
   }),
 }).unknown(false);
 
-export const movieCategoryUpdateVaidationSchema = Joi.object({
-  id: Joi.number().required().messages({
-    "number.base": "id must be a number.",
-    "any.required": "id is required.",
-  }),
+export const movieCategoryUpdateBodySchema = Joi.object({
   movieCategoryName: Joi.string().required().messages({
     "string.empty": "Movie Category Name is required.",
     "any.required": "Movie Category Name is required.",
