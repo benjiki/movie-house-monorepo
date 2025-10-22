@@ -5,25 +5,20 @@ import * as movieController from "../controller/movie.controller";
 const router: Router = express.Router();
 import { validateRequest } from "../middleware/validateRequest";
 import * as validation from "../validations/movies.validations";
-// interface AuthenticatedRequest extends Request {
-//   user?: { id: number; role: string };
-// }
-
-// router.post(
-//   "/movie-category-create",
-//   authenticateJWT,
-//   authorizeRoles("Admin"),
-//   (req: AuthenticatedRequest, res: Response) => {
-//     res.json({ message: "Access granted for admin", user: req.user });
-//   }
-// );
 
 router.post(
   "/movie-category-create",
   authenticateJWT,
   authorizeRoles("Admin"),
-  validateRequest(validation.movieCategoryVaidationSchema),
+  validateRequest(validation.movieCategoryCreateVaidationSchema),
   movieController.CreateMovieCategory
+);
+router.put(
+  "/movie-category-update",
+  authenticateJWT,
+  authorizeRoles("Admin"),
+  validateRequest(validation.movieCategoryUpdateVaidationSchema),
+  movieController.UpdateMovieCategory
 );
 
 export default router;

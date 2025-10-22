@@ -47,7 +47,19 @@ export const movieCategoryUpdate = async (data: {
     where: { id: data.id },
   });
   if (!findMovieCategory) {
-    throw new Error("movie category not found");
+    throw new ApiError(400, "movie category not found");
+  }
+
+  // Check if another category with the same name already exists (excluding current one)
+  const duplicateCategory = await prisma.movieCategory.findFirst({
+    where: {
+      movieCategoryName: data.movieCategoryName,
+      NOT: { id: data.id },
+    },
+  });
+
+  if (duplicateCategory) {
+    throw new ApiError(400, "Movie category name already exists");
   }
 
   return prisma.movieCategory.update({ where: { id: data.id }, data });
