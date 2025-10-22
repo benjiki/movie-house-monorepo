@@ -64,3 +64,14 @@ export const movieCategoryUpdate = async (data: {
 
   return prisma.movieCategory.update({ where: { id: data.id }, data });
 };
+
+export const movieCategoryDelete = async (data: { id: number }) => {
+  const findMovieCategory = await prisma.movieCategory.findFirst({
+    where: { id: data.id },
+  });
+  if (!findMovieCategory) {
+    throw new ApiError(400, "movie category not found ");
+  }
+
+  return prisma.movieCategory.delete({ where: { id: data.id } });
+};

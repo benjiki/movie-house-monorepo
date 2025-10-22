@@ -18,3 +18,17 @@ export const validateRequest = (schema: ObjectSchema) => {
     next();
   };
 };
+
+export const validateParams = (schema: ObjectSchema) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const { error } = schema.validate(req.params, { abortEarly: false });
+
+    if (error) {
+      const messages = error.details.map((details) => details.message);
+      return res
+        .status(400)
+        .json({ message: "Param Validation Error", errors: messages });
+    }
+    next();
+  };
+};

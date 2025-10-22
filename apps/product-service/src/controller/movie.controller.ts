@@ -31,3 +31,14 @@ export const UpdateMovieCategory = async (
       new ApiSuccess(movieCategoryUpdated, "Category updated successfully")
     );
 };
+
+export const DeleteMovieCategory = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  const id = parseInt(req.params.id);
+  const movieCategoryDelete = await movieService.movieCategoryDelete({ id });
+  res
+    .status(201)
+    .json(new ApiSuccess(movieCategoryDelete, "Category deleted successfully"));
+};
