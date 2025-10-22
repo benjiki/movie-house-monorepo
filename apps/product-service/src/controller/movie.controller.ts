@@ -8,9 +8,6 @@ export const CreateMovieCategory = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  if (!req.user) {
-    throw new ApiError(401, "Unauthorized: No user info");
-  }
   const movieCategory = await movieService.movieCategoryCreate({
     ...req.body,
     adminId: req.user?.id,
@@ -18,4 +15,19 @@ export const CreateMovieCategory = async (
   res
     .status(201)
     .json(new ApiSuccess(movieCategory, "Category created successfully"));
+};
+
+export const UpdateMovieCategory = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  const movieCategoryUpdated = await movieService.movieCategoryUpdate({
+    ...req.body,
+    adminId: req.body?.id,
+  });
+  res
+    .status(201)
+    .json(
+      new ApiSuccess(movieCategoryUpdated, "Category updated successfully")
+    );
 };
