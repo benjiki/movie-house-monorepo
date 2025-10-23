@@ -4,7 +4,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import movieCategoryRouter from "./router/movieCategory.route";
+import movieRouter from "./router/movie.route";
 import { ApiError } from "./utils/ApiError";
+import { ensureBucketExists } from "./utils/initMinioBucket";
 
 // Load env variables
 dotenv.config();
@@ -16,9 +18,13 @@ const PORT = process.env.PORT || 8001;
 app.use(cors());
 app.use(express.json()); // Parse JSON bodies
 
-// ✅ Routes
-app.use("/api/movies", movieCategoryRouter);
+(async () => {
+  await ensureBucketExists(process.env.S3_BUCKET!);
+})();
 
+// ✅ Routes
+app.use("/api/movieCategories", movieCategoryRouter);
+app.use("/api/movies", movieRouter);
 // ✅ Health check
 app.get("/", (req, res) => {
   res.send("Product Service is running 🚀");

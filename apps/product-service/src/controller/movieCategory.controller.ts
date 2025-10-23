@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as movieService from "../service/movieCategory.service";
+import * as movieCategoryService from "../service/movieCategory.service";
 import { ApiError, ApiSuccess } from "../utils/ApiError";
 interface AuthenticatedRequest extends Request {
   user?: { id: number; role: string };
@@ -8,7 +8,7 @@ export const CreateMovieCategory = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const movieCategory = await movieService.movieCategoryCreate({
+  const movieCategory = await movieCategoryService.movieCategoryCreate({
     ...req.body,
     adminId: req.user?.id,
   });
@@ -27,9 +27,10 @@ export const UpdateMovieCategory = async (
     throw new ApiError(400, "Invalid movie category ID");
   }
 
-  const movieCategoryUpdated = await movieService.movieCategoryUpdate({
+  const movieCategoryUpdated = await movieCategoryService.movieCategoryUpdate({
     ...req.body,
     adminId: req.body?.id,
+    id,
   });
   res
     .status(201)
@@ -43,7 +44,9 @@ export const DeleteMovieCategory = async (
   res: Response
 ) => {
   const id = parseInt(req.params.id);
-  const movieCategoryDelete = await movieService.movieCategoryDelete({ id });
+  const movieCategoryDelete = await movieCategoryService.movieCategoryDelete({
+    id,
+  });
   res
     .status(201)
     .json(new ApiSuccess(movieCategoryDelete, "Category deleted successfully"));
@@ -54,9 +57,10 @@ export const GetMovieCategoryById = async (
   res: Response
 ) => {
   const id = parseInt(req.params.id);
-  const GetSingleMovieCatagory = await movieService.getMovieCategoryByID({
-    id,
-  });
+  const GetSingleMovieCatagory =
+    await movieCategoryService.getMovieCategoryByID({
+      id,
+    });
   res.status(201).json(new ApiSuccess(GetSingleMovieCatagory, ""));
 };
 
@@ -64,6 +68,7 @@ export const GetAllMoviecategory = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const GetAllMovieCatagories = await movieService.getAllMovieCategory();
+  const GetAllMovieCatagories =
+    await movieCategoryService.getAllMovieCategory();
   res.status(201).json(new ApiSuccess(GetAllMovieCatagories, ""));
 };

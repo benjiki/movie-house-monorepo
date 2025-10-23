@@ -1,16 +1,17 @@
 import express, { Router } from "express";
 import { authenticateJWT, authorizeRoles } from "@repo/auth-lib";
-import * as movieController from "../controller/movieCategory.controller";
-const router: Router = express.Router();
+import * as movieCategoryController from "../controller/movieCategory.controller";
 import { validateParams, validateRequest } from "../middleware/validateRequest";
 import * as validation from "../validations/movies.validations";
+
+const router: Router = express.Router();
 
 router.post(
   "/movie-category",
   authenticateJWT,
   authorizeRoles("Admin"),
   validateRequest(validation.movieCategoryCreateVaidationSchema),
-  movieController.CreateMovieCategory
+  movieCategoryController.CreateMovieCategory
 );
 router.put(
   "/movie-category/:id",
@@ -18,7 +19,7 @@ router.put(
   authorizeRoles("Admin"),
   validateParams(validation.movieCategoryIdParamSchema),
   validateRequest(validation.movieCategoryUpdateBodySchema),
-  movieController.UpdateMovieCategory
+  movieCategoryController.UpdateMovieCategory
 );
 
 router.delete(
@@ -26,7 +27,7 @@ router.delete(
   authenticateJWT,
   authorizeRoles("Admin"),
   validateParams(validation.movieCategoryIdParamSchema),
-  movieController.DeleteMovieCategory
+  movieCategoryController.DeleteMovieCategory
 );
 
 router.get(
@@ -34,9 +35,9 @@ router.get(
   authenticateJWT,
   authorizeRoles("Admin", "Customer"),
   validateParams(validation.movieCategoryIdParamSchema),
-  movieController.GetMovieCategoryById
+  movieCategoryController.GetMovieCategoryById
 );
 
-router.get("/movie-category", movieController.GetAllMoviecategory);
+router.get("/movie-category", movieCategoryController.GetAllMoviecategory);
 
 export default router;

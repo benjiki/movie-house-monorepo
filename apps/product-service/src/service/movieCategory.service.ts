@@ -1,26 +1,5 @@
 import { prisma } from "@repo/product-db";
 import { ApiError } from "../utils/ApiError";
-export const createMovieService = async (data: {
-  movieName: string;
-  movieImage: string;
-  adminId: number;
-  movieCategoryId: number;
-}) => {
-  const movieExists = await prisma.movies.findFirst({
-    where: { movieName: data.movieName },
-  });
-  if (movieExists) {
-    throw new Error("Movie name is already used");
-  }
-  return prisma.movies.create({
-    data: {
-      movieName: data.movieName,
-      movieImage: data.movieImage,
-      adminId: data.adminId,
-      movieCategoryId: data.movieCategoryId,
-    },
-  });
-};
 
 export const movieCategoryCreate = async (data: {
   movieCategoryName: string;
