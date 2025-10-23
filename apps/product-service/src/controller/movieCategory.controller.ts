@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as movieService from "../service/movie.service";
+import * as movieService from "../service/movieCategory.service";
 import { ApiError, ApiSuccess } from "../utils/ApiError";
 interface AuthenticatedRequest extends Request {
   user?: { id: number; role: string };

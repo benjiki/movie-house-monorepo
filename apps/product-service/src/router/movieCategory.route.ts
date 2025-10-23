@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { authenticateJWT, authorizeRoles } from "@repo/auth-lib";
-import * as movieController from "../controller/movie.controller";
+import * as movieController from "../controller/movieCategory.controller";
 const router: Router = express.Router();
 import { validateParams, validateRequest } from "../middleware/validateRequest";
 import * as validation from "../validations/movies.validations";

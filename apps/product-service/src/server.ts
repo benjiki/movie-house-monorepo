@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import movieRouter from "./router/movie.route";
+import movieCategoryRouter from "./router/movieCategory.route";
 import { ApiError } from "./utils/ApiError";
 
 // Load env variables
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json()); // Parse JSON bodies
 
 // ✅ Routes
-app.use("/api/movies", movieRouter);
+app.use("/api/movies", movieCategoryRouter);
 
 // ✅ Health check
 app.get("/", (req, res) => {
