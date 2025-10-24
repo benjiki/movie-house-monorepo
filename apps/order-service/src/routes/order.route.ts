@@ -20,8 +20,49 @@ router.get(
 );
 
 router.post("/", authenticateJWTOptional, orderController.createOrder);
-router.get("/", orderController.getOrders);
-router.get("/:ticket", orderController.getOrderByTicket);
-router.patch("/:ticket/status", orderController.updateOrderStatus);
+// this router is for admin to get all the orders
+router.get(
+  "/",
+  authenticateJWT,
+  authorizeRoles("Admin"),
+  orderController.getOrders
+);
 
+// this router is for admin to get orders by customers ticket
+router.get(
+  "ticket/:ticket",
+  authenticateJWT,
+  authorizeRoles("Admin"),
+  orderController.getOrderByTicket
+);
+
+//this one is for admin to change the status for orders
+router.patch(
+  "ticket/:ticket/status",
+  authenticateJWT,
+  authorizeRoles("Admin"),
+  orderController.updateOrderStatus
+);
+
+// this one is for auth users/customers to get there orders or previous orders
+router.get(
+  "/my-orders",
+  authenticateJWT, // must be logged in
+  orderController.getUserOrders
+);
+
+// delete any  orders admin
+router.delete(
+  "/ticket/:ticket",
+  authenticateJWT,
+  authorizeRoles("Admin"),
+  orderController.deleteOrderByAdmin
+);
+// customers delete there own orders
+
+router.delete(
+  "/my-orders/:ticket",
+  authenticateJWT,
+  orderController.deleteUserOrder
+);
 export default router;

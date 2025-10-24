@@ -52,7 +52,9 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
     const order = await orderService.updateOrderStatus(ticket, parsed.status);
 
     if (!order) {
-      return res.status(404).json({ message: "Order not found" });
+      return res
+        .status(404)
+        .json({ message: "Order with this ticket and status not found" });
     }
 
     res.json(order);
@@ -87,11 +89,93 @@ export const getOrderByTicket = async (req: Request, res: Response) => {
     const order = await orderService.getOrderByTicket(ticket);
 
     if (!order) {
-      return res.status(404).json({ message: "Order not found" });
+      return res
+        .status(404)
+        .json({ message: " Order with this ticket not found" });
     }
 
     res.json(order);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Get all orders created by the authenticated user
+ */
+export const getUserOrders = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized: no user found" });
+    }
+
+    const orders = await orderService.getUserOrders(req.user.id);
+
+    if (!orders.length) {
+      return res.status(404).json({ message: "No orders found for this user" });
+    }
+
+    res.json(orders);
+  } catch (error: any) {
+    console.error("Error fetching user orders:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+/**
+ * User delete their own order
+ */
+export const deleteUserOrder = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    const { ticket } = req.params;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    if (!ticket) {
+      return res.status(400).json({ message: "Missing ticket parameter" });
+    }
+
+    const deleted = await orderService.deleteUserOrder(ticket, userId);
+
+    if (!deleted) {
+      return res
+        .status(404)
+        .json({ error: "Order not found or not owned by user" });
+    }
+
+    res.json({ message: "Order deleted successfully" });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+/**
+ * Admin delete any order
+ */
+export const deleteOrderByAdmin = async (req: Request, res: Response) => {
+  try {
+    const { ticket } = req.params;
+
+    if (!ticket) {
+      return res.status(400).json({ message: "Missing ticket parameter" });
+    }
+
+    const deleted = await orderService.deleteOrderByAdmin(ticket);
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    res.json({ message: "Order deleted successfully (Admin)" });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
   }
 };
