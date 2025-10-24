@@ -107,3 +107,14 @@ export const allMoviesService = async () => {
   }
   return getMovies;
 };
+
+export const movieByIdService = async (data: { id: number }) => {
+  const getMovieById = await prisma.movies.findUnique({
+    where: { id: data.id },
+  });
+
+  if (!getMovieById) {
+    throw new ApiError(404, "no movies with this id found in the database ");
+  }
+  return getMovieById;
+};

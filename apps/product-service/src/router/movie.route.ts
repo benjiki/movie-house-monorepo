@@ -25,6 +25,10 @@ router.put(
   upload.single("movieImage"),
   movieController.UpdateMovieController
 );
-
+router.get(
+  "/movie/:id",
+  validateParams(validation.movieIdParamSchema),
+  movieController.GetMoviesByIdController
+);
 router.get("/movie", movieController.GetAllmoviesController);
 export default router;

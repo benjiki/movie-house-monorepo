@@ -70,5 +70,13 @@ export const GetAllmoviesController = async (
 ) => {
   const allMovies = await movieService.allMoviesService();
   res.status(201).json(new ApiSuccess(allMovies));
-  io.emit("movieCreated", allMovies);
+};
+
+export const GetMoviesByIdController = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  const id = Number(req.params.id);
+  const movieById = await movieService.movieByIdService({ id });
+  res.status(201).json(new ApiSuccess(movieById));
 };
