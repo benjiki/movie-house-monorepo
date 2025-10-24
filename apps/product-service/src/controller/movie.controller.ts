@@ -3,15 +3,17 @@ import { ApiError, ApiSuccess } from "../utils/ApiError";
 import * as movieService from "../service/movie.service";
 import { movieCreateVaidationSchema } from "../validations/movies.validations";
 import multer from "multer";
-
-const storage = multer.memoryStorage();
+import { io } from "../server";
 
 interface AuthenticatedRequest extends Request {
   user?: { id: number; role: string };
   file?: Express.Multer.File; // add this line
 }
 
-export const CreateMovie = async (req: AuthenticatedRequest, res: Response) => {
+export const CreateMovieController = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   // 1️⃣ Validate body (movieName, adminId, movieCategoryId)
   const { error } = movieCreateVaidationSchema.validate(req.body);
   if (error) {
@@ -29,9 +31,13 @@ export const CreateMovie = async (req: AuthenticatedRequest, res: Response) => {
     contentType: req.file.mimetype,
   });
   res.status(201).json(new ApiSuccess(movie, "Movie created successfully"));
+  io.emit("movieCreated", movie);
 };
 
-export const UpdateMovie = async (req: AuthenticatedRequest, res: Response) => {
+export const UpdateMovieController = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   // 1️⃣ Validate body (movieName, adminId, movieCategoryId)
   const { error } = movieCreateVaidationSchema.validate(req.body);
   const id = Number(req.params.id);
@@ -54,4 +60,15 @@ export const UpdateMovie = async (req: AuthenticatedRequest, res: Response) => {
     id,
   });
   res.status(201).json(new ApiSuccess(movie, "Movie created successfully"));
+  // ✅ Use a different event name for clarity
+  io.emit("movieUpdated", movie);
+};
+
+export const GetAllmoviesController = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  const allMovies = await movieService.allMoviesService();
+  res.status(201).json(new ApiSuccess(allMovies));
+  io.emit("movieCreated", allMovies);
 };

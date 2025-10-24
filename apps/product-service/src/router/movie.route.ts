@@ -13,7 +13,7 @@ router.post(
   authorizeRoles("Admin"),
   upload.single("movieImage"),
   validateRequest(validation.movieCreateVaidationSchema),
-  movieController.CreateMovie
+  movieController.CreateMovieController
 );
 
 router.put(
@@ -23,7 +23,8 @@ router.put(
   validateParams(validation.movieIdParamSchema),
   validateRequest(validation.movieUpdateBodySchemaSchema),
   upload.single("movieImage"),
-  movieController.UpdateMovie
+  movieController.UpdateMovieController
 );
 
+router.get("/movie", movieController.GetAllmoviesController);
 export default router;

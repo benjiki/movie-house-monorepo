@@ -11,7 +11,7 @@ router.post(
   authenticateJWT,
   authorizeRoles("Admin"),
   validateRequest(validation.movieCategoryCreateVaidationSchema),
-  movieCategoryController.CreateMovieCategory
+  movieCategoryController.CreateMovieCategoryController
 );
 router.put(
   "/movie-category/:id",
@@ -19,7 +19,7 @@ router.put(
   authorizeRoles("Admin"),
   validateParams(validation.movieCategoryIdParamSchema),
   validateRequest(validation.movieCategoryUpdateBodySchema),
-  movieCategoryController.UpdateMovieCategory
+  movieCategoryController.UpdateMovieCategoryController
 );
 
 router.delete(
@@ -27,7 +27,7 @@ router.delete(
   authenticateJWT,
   authorizeRoles("Admin"),
   validateParams(validation.movieCategoryIdParamSchema),
-  movieCategoryController.DeleteMovieCategory
+  movieCategoryController.DeleteMovieCategoryController
 );
 
 router.get(
@@ -35,9 +35,12 @@ router.get(
   authenticateJWT,
   authorizeRoles("Admin", "Customer"),
   validateParams(validation.movieCategoryIdParamSchema),
-  movieCategoryController.GetMovieCategoryById
+  movieCategoryController.GetMovieCategoryByIdController
 );
 
-router.get("/movie-category", movieCategoryController.GetAllMoviecategory);
+router.get(
+  "/movie-category",
+  movieCategoryController.GetAllMoviecategoryController
+);
 
 export default router;

@@ -98,3 +98,12 @@ export const updateMovieService = async (data: {
     },
   });
 };
+
+export const allMoviesService = async () => {
+  const getMovies = await prisma.movies.findMany();
+
+  if (!getMovies) {
+    throw new ApiError(404, "no movies found in the database ");
+  }
+  return getMovies;
+};

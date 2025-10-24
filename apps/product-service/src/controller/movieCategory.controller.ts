@@ -4,7 +4,7 @@ import { ApiError, ApiSuccess } from "../utils/ApiError";
 interface AuthenticatedRequest extends Request {
   user?: { id: number; role: string };
 }
-export const CreateMovieCategory = async (
+export const CreateMovieCategoryController = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
@@ -17,7 +17,7 @@ export const CreateMovieCategory = async (
     .json(new ApiSuccess(movieCategory, "Category created successfully"));
 };
 
-export const UpdateMovieCategory = async (
+export const UpdateMovieCategoryController = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
@@ -39,7 +39,7 @@ export const UpdateMovieCategory = async (
     );
 };
 
-export const DeleteMovieCategory = async (
+export const DeleteMovieCategoryController = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
@@ -52,7 +52,7 @@ export const DeleteMovieCategory = async (
     .json(new ApiSuccess(movieCategoryDelete, "Category deleted successfully"));
 };
 
-export const GetMovieCategoryById = async (
+export const GetMovieCategoryByIdController = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
@@ -64,7 +64,7 @@ export const GetMovieCategoryById = async (
   res.status(201).json(new ApiSuccess(GetSingleMovieCatagory, ""));
 };
 
-export const GetAllMoviecategory = async (
+export const GetAllMoviecategoryController = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {

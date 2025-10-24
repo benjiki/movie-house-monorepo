@@ -2,7 +2,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-
+import { Server } from "socket.io";
+import http from "http";
 import movieCategoryRouter from "./router/movieCategory.route";
 import movieRouter from "./router/movie.route";
 import { ApiError } from "./utils/ApiError";
@@ -17,6 +18,14 @@ const PORT = process.env.PORT || 8001;
 // ✅ Middleware
 app.use(cors());
 app.use(express.json()); // Parse JSON bodies
+
+const server = http.createServer(app);
+
+export const io = new Server(server, {
+  cors: {
+    origin: "*", // use your frontend URL in production, e.g. "https://myapp.com"
+  },
+});
 
 (async () => {
   await ensureBucketExists(process.env.S3_BUCKET!);
@@ -56,4 +65,12 @@ app.use(
 // ✅ Start server
 app.listen(PORT, () => {
   console.log(`🚀 Product service running on port ${PORT}`);
+});
+
+io.on("connection", (socket) => {
+  console.log("✅ User connected:", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("❌ User disconnected:", socket.id);
+  });
 });
