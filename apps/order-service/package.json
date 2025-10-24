@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "pnpm dlx tsx --env-file=.env --watch src/server.ts",
+    "dev": "docker compose up -d && pnpm exec wait-port 27018 && pnpm dlx tsx --env-file=.env --watch src/server.ts",
     "check-types": "tsc --noEmit"
   },
   "keywords": [],
@@ -13,11 +13,20 @@
   "license": "ISC",
   "dependencies": {
     "@repo/auth-lib": "workspace:*",
+    "@repo/order-db": "workspace:*",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^8.19.2",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "@types/express": "^5.0.3"
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.9.1",
+    "cross-env": "^10.1.0",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "wait-port": "^1.1.0"
   }
 }

@@ -2,19 +2,39 @@
 import express from "express";
 import dotenv from "dotenv";
 import orderRouter from "./routes/order.route";
+import { connectMongo } from "./utils/connectMongo";
+
 // Load env variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8002;
 
-// ✅ Routes
-app.use("/api/orders", orderRouter);
+// ✅ Parse JSON request bodies
+app.use(express.json());
 
 // ✅ Health check
 app.get("/", (req, res) => {
   res.send("Order Service is running 🚀");
 });
+
+// ✅ Connect to MongoDB before starting routes
+connectMongo()
+  .then(() => {
+    console.log("MongoDB connected ✅");
+
+    // Register routes
+    app.use("/api/orders", orderRouter);
+
+    // ✅ Start server
+    app.listen(PORT, () => {
+      console.log(`🚀 Order service running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to connect to MongoDB", err);
+    process.exit(1);
+  });
 
 // ✅ Global error handler (optional)
 app.use(
@@ -28,8 +48,3 @@ app.use(
     res.status(500).json({ error: "Internal server error" });
   }
 );
-
-// ✅ Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Auth service running on port ${PORT}`);
-});
