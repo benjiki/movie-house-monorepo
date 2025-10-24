@@ -3710,7 +3710,6 @@ export namespace Prisma {
   export type SeriesMinAggregateOutputType = {
     id: number | null
     seriesName: string | null
-    seriesDis: string | null
     seriesImage: string | null
     seriesSeason: number | null
     seriesEpisode: number | null
@@ -3723,7 +3722,6 @@ export namespace Prisma {
   export type SeriesMaxAggregateOutputType = {
     id: number | null
     seriesName: string | null
-    seriesDis: string | null
     seriesImage: string | null
     seriesSeason: number | null
     seriesEpisode: number | null
@@ -3736,7 +3734,6 @@ export namespace Prisma {
   export type SeriesCountAggregateOutputType = {
     id: number
     seriesName: number
-    seriesDis: number
     seriesImage: number
     seriesSeason: number
     seriesEpisode: number
@@ -3767,7 +3764,6 @@ export namespace Prisma {
   export type SeriesMinAggregateInputType = {
     id?: true
     seriesName?: true
-    seriesDis?: true
     seriesImage?: true
     seriesSeason?: true
     seriesEpisode?: true
@@ -3780,7 +3776,6 @@ export namespace Prisma {
   export type SeriesMaxAggregateInputType = {
     id?: true
     seriesName?: true
-    seriesDis?: true
     seriesImage?: true
     seriesSeason?: true
     seriesEpisode?: true
@@ -3793,7 +3788,6 @@ export namespace Prisma {
   export type SeriesCountAggregateInputType = {
     id?: true
     seriesName?: true
-    seriesDis?: true
     seriesImage?: true
     seriesSeason?: true
     seriesEpisode?: true
@@ -3893,7 +3887,6 @@ export namespace Prisma {
   export type SeriesGroupByOutputType = {
     id: number
     seriesName: string
-    seriesDis: string
     seriesImage: string
     seriesSeason: number
     seriesEpisode: number
@@ -3925,7 +3918,6 @@ export namespace Prisma {
   export type seriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     seriesName?: boolean
-    seriesDis?: boolean
     seriesImage?: boolean
     seriesSeason?: boolean
     seriesEpisode?: boolean
@@ -3939,7 +3931,6 @@ export namespace Prisma {
   export type seriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     seriesName?: boolean
-    seriesDis?: boolean
     seriesImage?: boolean
     seriesSeason?: boolean
     seriesEpisode?: boolean
@@ -3953,7 +3944,6 @@ export namespace Prisma {
   export type seriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     seriesName?: boolean
-    seriesDis?: boolean
     seriesImage?: boolean
     seriesSeason?: boolean
     seriesEpisode?: boolean
@@ -3967,7 +3957,6 @@ export namespace Prisma {
   export type seriesSelectScalar = {
     id?: boolean
     seriesName?: boolean
-    seriesDis?: boolean
     seriesImage?: boolean
     seriesSeason?: boolean
     seriesEpisode?: boolean
@@ -3977,7 +3966,7 @@ export namespace Prisma {
     seriesCategoryId?: boolean
   }
 
-  export type seriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seriesName" | "seriesDis" | "seriesImage" | "seriesSeason" | "seriesEpisode" | "createdAt" | "updatedAt" | "adminId" | "seriesCategoryId", ExtArgs["result"]["series"]>
+  export type seriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seriesName" | "seriesImage" | "seriesSeason" | "seriesEpisode" | "createdAt" | "updatedAt" | "adminId" | "seriesCategoryId", ExtArgs["result"]["series"]>
   export type seriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     seriesCategory?: boolean | seriesCategoryDefaultArgs<ExtArgs>
   }
@@ -3996,7 +3985,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       seriesName: string
-      seriesDis: string
       seriesImage: string
       seriesSeason: number
       seriesEpisode: number
@@ -4430,7 +4418,6 @@ export namespace Prisma {
   interface seriesFieldRefs {
     readonly id: FieldRef<"series", 'Int'>
     readonly seriesName: FieldRef<"series", 'String'>
-    readonly seriesDis: FieldRef<"series", 'String'>
     readonly seriesImage: FieldRef<"series", 'String'>
     readonly seriesSeason: FieldRef<"series", 'Int'>
     readonly seriesEpisode: FieldRef<"series", 'Int'>
@@ -8283,7 +8270,6 @@ export namespace Prisma {
   export const SeriesScalarFieldEnum: {
     id: 'id',
     seriesName: 'seriesName',
-    seriesDis: 'seriesDis',
     seriesImage: 'seriesImage',
     seriesSeason: 'seriesSeason',
     seriesEpisode: 'seriesEpisode',
@@ -8563,7 +8549,6 @@ export namespace Prisma {
     NOT?: seriesWhereInput | seriesWhereInput[]
     id?: IntFilter<"series"> | number
     seriesName?: StringFilter<"series"> | string
-    seriesDis?: StringFilter<"series"> | string
     seriesImage?: StringFilter<"series"> | string
     seriesSeason?: IntFilter<"series"> | number
     seriesEpisode?: IntFilter<"series"> | number
@@ -8577,7 +8562,6 @@ export namespace Prisma {
   export type seriesOrderByWithRelationInput = {
     id?: SortOrder
     seriesName?: SortOrder
-    seriesDis?: SortOrder
     seriesImage?: SortOrder
     seriesSeason?: SortOrder
     seriesEpisode?: SortOrder
@@ -8594,7 +8578,6 @@ export namespace Prisma {
     OR?: seriesWhereInput[]
     NOT?: seriesWhereInput | seriesWhereInput[]
     seriesName?: StringFilter<"series"> | string
-    seriesDis?: StringFilter<"series"> | string
     seriesImage?: StringFilter<"series"> | string
     seriesSeason?: IntFilter<"series"> | number
     seriesEpisode?: IntFilter<"series"> | number
@@ -8608,7 +8591,6 @@ export namespace Prisma {
   export type seriesOrderByWithAggregationInput = {
     id?: SortOrder
     seriesName?: SortOrder
-    seriesDis?: SortOrder
     seriesImage?: SortOrder
     seriesSeason?: SortOrder
     seriesEpisode?: SortOrder
@@ -8629,7 +8611,6 @@ export namespace Prisma {
     NOT?: seriesScalarWhereWithAggregatesInput | seriesScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"series"> | number
     seriesName?: StringWithAggregatesFilter<"series"> | string
-    seriesDis?: StringWithAggregatesFilter<"series"> | string
     seriesImage?: StringWithAggregatesFilter<"series"> | string
     seriesSeason?: IntWithAggregatesFilter<"series"> | number
     seriesEpisode?: IntWithAggregatesFilter<"series"> | number
@@ -8967,7 +8948,6 @@ export namespace Prisma {
 
   export type seriesCreateInput = {
     seriesName: string
-    seriesDis: string
     seriesImage: string
     seriesSeason: number
     seriesEpisode: number
@@ -8980,7 +8960,6 @@ export namespace Prisma {
   export type seriesUncheckedCreateInput = {
     id?: number
     seriesName: string
-    seriesDis: string
     seriesImage: string
     seriesSeason: number
     seriesEpisode: number
@@ -8992,7 +8971,6 @@ export namespace Prisma {
 
   export type seriesUpdateInput = {
     seriesName?: StringFieldUpdateOperationsInput | string
-    seriesDis?: StringFieldUpdateOperationsInput | string
     seriesImage?: StringFieldUpdateOperationsInput | string
     seriesSeason?: IntFieldUpdateOperationsInput | number
     seriesEpisode?: IntFieldUpdateOperationsInput | number
@@ -9005,7 +8983,6 @@ export namespace Prisma {
   export type seriesUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     seriesName?: StringFieldUpdateOperationsInput | string
-    seriesDis?: StringFieldUpdateOperationsInput | string
     seriesImage?: StringFieldUpdateOperationsInput | string
     seriesSeason?: IntFieldUpdateOperationsInput | number
     seriesEpisode?: IntFieldUpdateOperationsInput | number
@@ -9018,7 +8995,6 @@ export namespace Prisma {
   export type seriesCreateManyInput = {
     id?: number
     seriesName: string
-    seriesDis: string
     seriesImage: string
     seriesSeason: number
     seriesEpisode: number
@@ -9030,7 +9006,6 @@ export namespace Prisma {
 
   export type seriesUpdateManyMutationInput = {
     seriesName?: StringFieldUpdateOperationsInput | string
-    seriesDis?: StringFieldUpdateOperationsInput | string
     seriesImage?: StringFieldUpdateOperationsInput | string
     seriesSeason?: IntFieldUpdateOperationsInput | number
     seriesEpisode?: IntFieldUpdateOperationsInput | number
@@ -9042,7 +9017,6 @@ export namespace Prisma {
   export type seriesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     seriesName?: StringFieldUpdateOperationsInput | string
-    seriesDis?: StringFieldUpdateOperationsInput | string
     seriesImage?: StringFieldUpdateOperationsInput | string
     seriesSeason?: IntFieldUpdateOperationsInput | number
     seriesEpisode?: IntFieldUpdateOperationsInput | number
@@ -9469,7 +9443,6 @@ export namespace Prisma {
   export type seriesCountOrderByAggregateInput = {
     id?: SortOrder
     seriesName?: SortOrder
-    seriesDis?: SortOrder
     seriesImage?: SortOrder
     seriesSeason?: SortOrder
     seriesEpisode?: SortOrder
@@ -9490,7 +9463,6 @@ export namespace Prisma {
   export type seriesMaxOrderByAggregateInput = {
     id?: SortOrder
     seriesName?: SortOrder
-    seriesDis?: SortOrder
     seriesImage?: SortOrder
     seriesSeason?: SortOrder
     seriesEpisode?: SortOrder
@@ -9503,7 +9475,6 @@ export namespace Prisma {
   export type seriesMinOrderByAggregateInput = {
     id?: SortOrder
     seriesName?: SortOrder
-    seriesDis?: SortOrder
     seriesImage?: SortOrder
     seriesSeason?: SortOrder
     seriesEpisode?: SortOrder
@@ -10167,7 +10138,6 @@ export namespace Prisma {
 
   export type seriesCreateWithoutSeriesCategoryInput = {
     seriesName: string
-    seriesDis: string
     seriesImage: string
     seriesSeason: number
     seriesEpisode: number
@@ -10179,7 +10149,6 @@ export namespace Prisma {
   export type seriesUncheckedCreateWithoutSeriesCategoryInput = {
     id?: number
     seriesName: string
-    seriesDis: string
     seriesImage: string
     seriesSeason: number
     seriesEpisode: number
@@ -10220,7 +10189,6 @@ export namespace Prisma {
     NOT?: seriesScalarWhereInput | seriesScalarWhereInput[]
     id?: IntFilter<"series"> | number
     seriesName?: StringFilter<"series"> | string
-    seriesDis?: StringFilter<"series"> | string
     seriesImage?: StringFilter<"series"> | string
     seriesSeason?: IntFilter<"series"> | number
     seriesEpisode?: IntFilter<"series"> | number
@@ -10376,7 +10344,6 @@ export namespace Prisma {
   export type seriesCreateManySeriesCategoryInput = {
     id?: number
     seriesName: string
-    seriesDis: string
     seriesImage: string
     seriesSeason: number
     seriesEpisode: number
@@ -10387,7 +10354,6 @@ export namespace Prisma {
 
   export type seriesUpdateWithoutSeriesCategoryInput = {
     seriesName?: StringFieldUpdateOperationsInput | string
-    seriesDis?: StringFieldUpdateOperationsInput | string
     seriesImage?: StringFieldUpdateOperationsInput | string
     seriesSeason?: IntFieldUpdateOperationsInput | number
     seriesEpisode?: IntFieldUpdateOperationsInput | number
@@ -10399,7 +10365,6 @@ export namespace Prisma {
   export type seriesUncheckedUpdateWithoutSeriesCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
     seriesName?: StringFieldUpdateOperationsInput | string
-    seriesDis?: StringFieldUpdateOperationsInput | string
     seriesImage?: StringFieldUpdateOperationsInput | string
     seriesSeason?: IntFieldUpdateOperationsInput | number
     seriesEpisode?: IntFieldUpdateOperationsInput | number
@@ -10411,7 +10376,6 @@ export namespace Prisma {
   export type seriesUncheckedUpdateManyWithoutSeriesCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
     seriesName?: StringFieldUpdateOperationsInput | string
-    seriesDis?: StringFieldUpdateOperationsInput | string
     seriesImage?: StringFieldUpdateOperationsInput | string
     seriesSeason?: IntFieldUpdateOperationsInput | number
     seriesEpisode?: IntFieldUpdateOperationsInput | number

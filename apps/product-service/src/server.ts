@@ -6,6 +6,8 @@ import { Server } from "socket.io";
 import http from "http";
 import movieCategoryRouter from "./router/movieCategory.route";
 import movieRouter from "./router/movie.route";
+import seriesRouter from "./router/series.route";
+import seriesCategoryRouter from "./router/SeriesCategory.route";
 import { ApiError } from "./utils/ApiError";
 import { ensureBucketExists } from "./utils/initMinioBucket";
 
@@ -29,11 +31,16 @@ export const io = new Server(server, {
 
 (async () => {
   await ensureBucketExists(process.env.S3_BUCKET!);
+  await ensureBucketExists("series");
 })();
 
 // ✅ Routes
 app.use("/api/movieCategories", movieCategoryRouter);
 app.use("/api/movies", movieRouter);
+
+app.use("/api/seiesCategory", seriesCategoryRouter);
+app.use("/api/series", seriesRouter);
+
 // ✅ Health check
 app.get("/", (req, res) => {
   res.send("Product Service is running 🚀");

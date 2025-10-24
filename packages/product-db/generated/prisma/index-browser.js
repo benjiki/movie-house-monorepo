@@ -142,7 +142,6 @@ exports.Prisma.MovieCategoryScalarFieldEnum = {
 exports.Prisma.SeriesScalarFieldEnum = {
   id: 'id',
   seriesName: 'seriesName',
-  seriesDis: 'seriesDis',
   seriesImage: 'seriesImage',
   seriesSeason: 'seriesSeason',
   seriesEpisode: 'seriesEpisode',

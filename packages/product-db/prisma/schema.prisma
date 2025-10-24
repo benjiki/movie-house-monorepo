@@ -34,7 +34,6 @@ model movieCategory {
 model series {
   id            Int      @id @default(autoincrement())
   seriesName    String
-  seriesDis     String
   seriesImage   String
   seriesSeason  Int
   seriesEpisode Int
