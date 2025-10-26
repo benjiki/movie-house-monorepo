@@ -32,8 +32,6 @@ router.delete(
 
 router.get(
   "/movie-category/:id",
-  authenticateJWT,
-  authorizeRoles("Admin", "Customer"),
   validateParams(validation.movieCategoryIdParamSchema),
   movieCategoryController.GetMovieCategoryByIdController
 );

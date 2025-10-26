@@ -30,4 +30,14 @@ router.delete(
   seriesCategoryController.DeleteSeriesCategoryController
 );
 
+router.get(
+  "/series-category/:id",
+  validateParams(validation.seriesCategoryIdParamSchema),
+  seriesCategoryController.GetSeriesCategoryByIdController
+);
+
+router.get(
+  "/series-category",
+  seriesCategoryController.GetAllSeriescategoryController
+);
 export default router;

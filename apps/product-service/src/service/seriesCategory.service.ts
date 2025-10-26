@@ -52,8 +52,19 @@ export const seriesCategoryDelete = async (data: { id: number }) => {
   if (!findSeriesCategory) {
     throw new ApiError(400, "series category not found ");
   }
+  // Check if there are any series using this category
+  const findSeriesUsingThisCategory = await prisma.series.count({
+    where: { seriesCategoryId: data.id },
+  });
 
-  return prisma.series.delete({ where: { id: data.id } });
+  if (findSeriesUsingThisCategory > 0) {
+    throw new ApiError(
+      400,
+      `This category is being used by ${findSeriesUsingThisCategory} series. Please remove the reference before deleting the category.`
+    );
+  }
+
+  return prisma.seriesCategory.delete({ where: { id: data.id } });
 };
 
 export const getSeriesCategoryByID = async (data: { id: number }) => {

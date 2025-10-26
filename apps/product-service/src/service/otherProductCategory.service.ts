@@ -54,6 +54,17 @@ export const otherProductCategoryDelete = async (data: { id: number }) => {
   if (!findotherProductCategory) {
     throw new ApiError(400, "product category not found ");
   }
+  // Check if there are any otherProducts using this category
+  const findOtherProductsUsingThisCategory = await prisma.otherProducts.count({
+    where: { otherProductCategoryId: data.id },
+  });
+
+  if (findOtherProductsUsingThisCategory > 0) {
+    throw new ApiError(
+      400,
+      `This category is being used by ${findOtherProductsUsingThisCategory} products. Please remove the reference before deleting the category.`
+    );
+  }
 
   return prisma.otherProductCategory.delete({ where: { id: data.id } });
 };

@@ -52,6 +52,18 @@ export const movieCategoryDelete = async (data: { id: number }) => {
     throw new ApiError(400, "movie category not found ");
   }
 
+  // Check if there are any movies using this category
+  const findMoviesUsingThisCategory = await prisma.movies.count({
+    where: { movieCategoryId: data.id },
+  });
+
+  if (findMoviesUsingThisCategory > 0) {
+    throw new ApiError(
+      400,
+      `This category is being used by ${findMoviesUsingThisCategory} movies. Please remove the reference before deleting the category.`
+    );
+  }
+
   return prisma.movieCategory.delete({ where: { id: data.id } });
 };
 
