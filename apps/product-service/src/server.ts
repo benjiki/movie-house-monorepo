@@ -4,10 +4,14 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
 import http from "http";
+
 import movieCategoryRouter from "./router/movieCategory.route";
 import movieRouter from "./router/movie.route";
 import seriesRouter from "./router/series.route";
 import seriesCategoryRouter from "./router/SeriesCategory.route";
+import otherProductRouter from "./router/otherProducts.route";
+import otherProductCategoryRouter from "./router/otherProductsCategory.route";
+
 import { ApiError } from "./utils/ApiError";
 import { ensureBucketExists } from "./utils/initMinioBucket";
 
@@ -30,16 +34,24 @@ export const io = new Server(server, {
 });
 
 (async () => {
-  await ensureBucketExists(process.env.S3_BUCKET!);
+  await ensureBucketExists("movies");
   await ensureBucketExists("series");
+  await ensureBucketExists("otherproducts");
 })();
 
 // ✅ Routes
+
+// movies routes
 app.use("/api/movieCategories", movieCategoryRouter);
 app.use("/api/movies", movieRouter);
 
+// series routes
 app.use("/api/seiesCategory", seriesCategoryRouter);
 app.use("/api/series", seriesRouter);
+
+//otherProduct routes
+app.use("/api/otherProductCategory", otherProductCategoryRouter);
+app.use("/api/otherProduct", otherProductRouter);
 
 // ✅ Health check
 app.get("/", (req, res) => {

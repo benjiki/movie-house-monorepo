@@ -118,3 +118,19 @@ export const movieByIdService = async (data: { id: number }) => {
   }
   return getMovieById;
 };
+
+export const movieDelete = async (data: { id: number }) => {
+  const findMovie = await prisma.movies.findFirst({
+    where: { id: data.id },
+  });
+  if (!findMovie) {
+    throw new ApiError(400, "movie  not found ");
+  }
+
+  // Delete old file (only if it exists)
+  if (findMovie.movieImage) {
+    await deleteFromMinio(findMovie.movieImage, "movies");
+  }
+
+  return prisma.movies.delete({ where: { id: data.id } });
+};

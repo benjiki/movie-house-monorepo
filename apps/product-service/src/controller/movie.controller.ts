@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import { ApiError, ApiSuccess } from "../utils/ApiError";
 import * as movieService from "../service/movie.service";
-import { movieCreateVaidationSchema } from "../validations/movies.validations";
+import {
+  movieCreateVaidationSchema,
+  movieUpdateBodySchemaSchema,
+} from "../validations/movies.validations";
 import multer from "multer";
 import { io } from "../server";
 
@@ -39,7 +42,7 @@ export const UpdateMovieController = async (
   res: Response
 ) => {
   // 1️⃣ Validate body (movieName, adminId, movieCategoryId)
-  const { error } = movieCreateVaidationSchema.validate(req.body);
+  const { error } = movieUpdateBodySchemaSchema.validate(req.body);
   const id = Number(req.params.id);
   if (error) {
     throw new ApiError(400, "Movie  is required.");
@@ -79,4 +82,17 @@ export const GetMoviesByIdController = async (
   const id = Number(req.params.id);
   const movieById = await movieService.movieByIdService({ id });
   res.status(201).json(new ApiSuccess(movieById));
+};
+
+export const DeleteMovieController = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  const id = parseInt(req.params.id);
+  const movieDelete = await movieService.movieDelete({
+    id,
+  });
+  res
+    .status(201)
+    .json(new ApiSuccess(movieDelete, "Movie deleted successfully"));
 };

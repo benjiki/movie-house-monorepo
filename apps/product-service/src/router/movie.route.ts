@@ -25,10 +25,20 @@ router.put(
   upload.single("movieImage"),
   movieController.UpdateMovieController
 );
+
+router.delete(
+  "/movie/:id",
+  authenticateJWT,
+  authorizeRoles("Admin"),
+  validateParams(validation.movieIdParamSchema),
+  movieController.DeleteMovieController
+);
+
 router.get(
   "/movie/:id",
   validateParams(validation.movieIdParamSchema),
   movieController.GetMoviesByIdController
 );
+
 router.get("/movie", movieController.GetAllmoviesController);
 export default router;
