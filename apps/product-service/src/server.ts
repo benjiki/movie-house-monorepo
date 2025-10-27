@@ -14,6 +14,7 @@ import otherProductCategoryRouter from "./router/otherProductsCategory.route";
 
 import { ApiError } from "./utils/ApiError";
 import { ensureBucketExists } from "./utils/initMinioBucket";
+import { startProductConsumer } from "./kafka/consumer";
 
 // Load env variables
 dotenv.config();
@@ -26,6 +27,10 @@ app.use(cors());
 app.use(express.json()); // Parse JSON bodies
 
 const server = http.createServer(app);
+
+startProductConsumer().then(() =>
+  console.log("✅ Product Service Kafka Consumer running")
+);
 
 export const io = new Server(server, {
   cors: {

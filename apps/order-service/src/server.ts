@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import orderRouter from "./routes/order.route";
 import { connectMongo } from "./utils/connectMongo";
 
+import { startOrderConsumer } from "./kafka/consumer";
+import { producer } from "./kafka/producer";
+
 // Load env variables
 dotenv.config();
 
@@ -12,6 +15,11 @@ const PORT = process.env.PORT || 8002;
 
 // ✅ Parse JSON request bodies
 app.use(express.json());
+
+await producer.connect();
+await startOrderConsumer();
+
+console.log("✅ Order Service Kafka Producer & Consumer connected");
 
 // ✅ Health check
 app.get("/", (req, res) => {

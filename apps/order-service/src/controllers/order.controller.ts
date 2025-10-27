@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import * as orderService from "../services/order.service";
 
+import { producer } from "../kafka/producer";
+import { waitForValidation } from "../services/productValidationHandler";
+
 import {
   CreateOrderSchema,
   UpdateOrderStatusSchema,
@@ -25,6 +28,23 @@ interface AuthenticatedRequest extends Request {
 export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const parsed = CreateOrderSchema.parse(req.body);
+
+    const orderId = Date.now(); // or generate from DB first
+
+    // ✅ Wait for product service to respond
+    const { valid, missing } = await waitForValidation(orderId);
+
+    if (!valid) {
+      return res.status(400).json({
+        message: "Some products do not exist",
+        missing,
+      });
+    }
+
+    await producer.send("validate-products-request", {
+      orderId,
+      items: parsed.items,
+    });
 
     const order = await orderService.createOrder({
       ...parsed, // spread validated data
